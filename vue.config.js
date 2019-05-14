@@ -1,5 +1,6 @@
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { NODE_ENV } = process.env;
 function resolve(dir) {
     return path.join(__dirname, '.', dir);
@@ -24,18 +25,14 @@ module.exports = {
         }
     },
     configureWebpack: config => {
-        config.indexScript = [
-            `<script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>`,
-            `<script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>`,
-            `<script src="https://cdn.bootcss.com/vuex/3.1.0/vuex.min.js"></script>`,
-            `<script src="https://cdn.bootcss.com/vue-router/3.0.3/vue-router.min.js"></script>`,
-            `<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">`,
-            `<script src="https://unpkg.com/element-ui/lib/index.js"></script>`
-        ];
+        //配置别名
         config.resolve.alias = {
             '@': resolve('src')
         };
+        const plugins = [];
+
         if (NODE_ENV === 'production') {
+            //使用cdn
             config.externals = {
                 axios: 'axios',
                 vue: 'Vue',
@@ -43,15 +40,27 @@ module.exports = {
                 'vue-router': 'VueRouter',
                 'element-ui': 'ELEMENT'
             };
+            for (let item of config.plugins) {
+                if (item instanceof HtmlWebpackPlugin) {
+                    item.options.cdnConfig = [
+                        `https://cdn.bootcss.com/axios/0.18.0/axios.min.js`,
+                        `https://cdn.bootcss.com/vue/2.6.10/vue.min.js`,
+                        `https://cdn.bootcss.com/vuex/3.1.0/vuex.min.js`,
+                        `https://cdn.bootcss.com/vue-router/3.0.3/vue-router.min.js`,
+                        `https://unpkg.com/element-ui/lib/theme-chalk/index.css`,
+                        `https://unpkg.com/element-ui/lib/index.js`
+                    ];
+                    break;
+                }
+            }
             //移除console
-            const plugins = [];
             plugins.push(
                 new UglifyJsPlugin({
                     uglifyOptions: {
                         compress: {
                             warnings: false,
                             drop_console: true,
-                            drop_debugger: false,
+                            drop_debugger: true,
                             pure_funcs: ['console.log']
                         }
                     },
@@ -59,8 +68,8 @@ module.exports = {
                     parallel: true
                 })
             );
-            config.plugins = [...config.plugins, ...plugins];
         }
+        config.plugins = [...config.plugins, ...plugins];
     },
     chainWebpack: config => {
         config.module
