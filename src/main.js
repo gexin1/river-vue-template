@@ -1,12 +1,24 @@
-import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
+//vue
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router/index';
+import store from './store/index';
+
+import TagsSelectView from '@/components/tags-select-view/index.js';
+//框架
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+
+Vue.use(ElementUI).use(TagsSelectView);
+
+import './global-import/index';
+import './icons';
+import './styles/global.scss';
 
 Vue.config.productionTip = false;
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount("#app");
+Vue.prototype.$VM = new Vue({
+    router,
+    store,
+    render: h => h(App)
+}).$mount('#app');
