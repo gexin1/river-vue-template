@@ -1,7 +1,10 @@
 //使用cdn配置
 const cdn = {
+    //是否启用
     isUse: true,
+    //在什么模式下启用
     mode: 'production',
+    // 参考 https://webpack.docschina.org/configuration/externals/
     externals: {
         axios: 'axios',
         vue: 'Vue',
@@ -9,6 +12,7 @@ const cdn = {
         'vue-router': 'VueRouter',
         'element-ui': 'ELEMENT'
     },
+    //需要挂载的css js
     cdnCSSList: [
         `https://cdn.bootcss.com/element-ui/2.8.2/theme-chalk/index.css`
     ],
