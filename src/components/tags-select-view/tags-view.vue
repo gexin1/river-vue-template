@@ -2,7 +2,11 @@
     <div class="tags_view">
         <div class="before btn" @click="pre"></div>
         <div class="after btn" @click="next"></div>
-        <div class="close_other btn" title="关闭其他标签" @click="closeOtherTag"></div>
+        <div
+            class="close_other btn"
+            title="关闭其他标签"
+            @click="closeOtherTag"
+        ></div>
         <div class="tag_box" ref="tagBox">
             <ul class="tag_list" ref="tagList" :style="scrollLeftToStyle">
                 <li
@@ -15,7 +19,10 @@
                     <div :class="['tag_item', isActive(item) ? 'active' : '']">
                         <i class="tag_icon tag_dot"></i>
                         {{ item.name }}
-                        <i class="tag_icon tag_close" @click.prevent.stop="closeSelectedTag(item)"></i>
+                        <i
+                            class="tag_icon tag_close"
+                            @click.prevent.stop="closeSelectedTag(item)"
+                        ></i>
                     </div>
                 </li>
             </ul>
@@ -76,7 +83,10 @@ export default {
             } else if (itemOffsetLeft <= this.scrollLeft) {
                 //标签左边超出
                 this.scrollLeft = itemOffsetLeft;
-            } else if (itemOffsetLeft + itemOffsetWidth - this.scrollLeft > boxWidth) {
+            } else if (
+                itemOffsetLeft + itemOffsetWidth - this.scrollLeft >
+                boxWidth
+            ) {
                 //标签右边超出
                 this.scrollLeft = itemOffsetLeft + itemOffsetWidth - boxWidth;
             } else {

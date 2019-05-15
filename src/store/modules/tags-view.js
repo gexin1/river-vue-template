@@ -18,11 +18,15 @@ const mutations = {
     },
     DEL_ROUTE: (state, payload) => {
         let { visitedViews } = state;
-        state.visitedViews = visitedViews.filter(item => item.path !== payload.path);
+        state.visitedViews = visitedViews.filter(
+            item => item.path !== payload.path
+        );
     },
     DEL_OTHER_ROUTE: (state, payload) => {
         let { visitedViews } = state;
-        state.visitedViews = visitedViews.filter(item => item.path === payload.path);
+        state.visitedViews = visitedViews.filter(
+            item => item.path === payload.path
+        );
     }
 };
 const actions = {};
