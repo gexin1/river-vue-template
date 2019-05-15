@@ -38,11 +38,7 @@
                 </span>
             </el-form-item>
             <el-form-item>
-                <el-button
-                    :loading="loading"
-                    type="primary"
-                    style="width:100%;"
-                    @click.native.prevent="handleLogin"
+                <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin"
                     >登录</el-button
                 >
             </el-form-item>
@@ -82,9 +78,7 @@ export default {
                         validator: validateUsername
                     }
                 ],
-                password: [
-                    { required: true, trigger: 'blur', validator: validatePass }
-                ]
+                password: [{ required: true, trigger: 'blur', validator: validatePass }]
             },
             loading: false,
             pwdType: 'password'

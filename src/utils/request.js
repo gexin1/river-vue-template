@@ -19,9 +19,7 @@ request.interceptors.request.use(
         if (['POST', 'PUT', 'DELETE'].includes(method.toUpperCase())) {
             if (
                 typeof data === 'object' &&
-                config['headers']['Content-Type'].includes(
-                    'application/x-www-form-urlencoded'
-                )
+                config['headers']['Content-Type'].includes('application/x-www-form-urlencoded')
             ) {
                 config.data = qs.stringify(data);
             }

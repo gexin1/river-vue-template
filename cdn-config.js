@@ -9,9 +9,7 @@ const cdn = {
         'vue-router': 'VueRouter',
         'element-ui': 'ELEMENT'
     },
-    cdnCSSList: [
-        `https://cdn.bootcss.com/element-ui/2.8.2/theme-chalk/index.css`
-    ],
+    cdnCSSList: [`https://cdn.bootcss.com/element-ui/2.8.2/theme-chalk/index.css`],
     cdnJSList: [
         `https://cdn.bootcss.com/axios/0.18.0/axios.min.js`,
         `https://cdn.bootcss.com/vue/2.6.10/vue.min.js`,

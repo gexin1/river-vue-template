@@ -8,9 +8,7 @@ Vue.mixin({
     },
     mounted() {
         this.$nextTick(() => {
-            this.$refs.table &&
-                (this.GlobalTableHeight =
-                    window.innerHeight - this.$refs.table.$el.offsetTop - 160);
+            this.$refs.table && (this.GlobalTableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 160);
         });
     }
 });

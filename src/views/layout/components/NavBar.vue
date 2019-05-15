@@ -1,19 +1,13 @@
 <template>
     <div class="nav_bar">
-        <div
-            :class="{ menu_icon: true, active: collapseStatus }"
-            @click="menuChange"
-        >
+        <div :class="{ menu_icon: true, active: collapseStatus }" @click="menuChange">
             <svg-icon icon-class="menu" />
         </div>
         <div class="breadcrumb">
             <el-breadcrumb separator="/" separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item
-                    v-for="(item, index) in breadlist"
-                    :key="index"
-                    :to="{ path: item.path }"
-                    >{{ item.meta.name }}</el-breadcrumb-item
-                >
+                <el-breadcrumb-item v-for="(item, index) in breadlist" :key="index" :to="{ path: item.path }">{{
+                    item.meta.name
+                }}</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="user_name">{{ userInfo.nickname }}</div>
