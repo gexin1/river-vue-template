@@ -40,6 +40,7 @@ request.interceptors.response.use(
             if (status === 200 && data.f === 1) {
                 return Promise.resolve(data);
             } else if ([65264, 65535].includes(data.f)) {
+                //如果 状态为 就去登录
                 that.$VM.$router.push({ path: '/login' });
                 Notification({
                     title: '提示',

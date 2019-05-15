@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-
+import hooks from './hooks';
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
     routes: [
         //主页
         {
@@ -45,6 +45,15 @@ export default new Router({
             },
             component: () => import('@/views/login/index.vue'),
             hide: true
+        },
+        {
+            path: '*',
+            component: () => import('@/views/error/404.vue'),
+            hide: true
         }
     ]
 });
+
+hooks(router);
+
+export default router;

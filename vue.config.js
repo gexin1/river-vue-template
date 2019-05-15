@@ -1,6 +1,7 @@
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const cdn = require('./cdn-config');
 const { NODE_ENV } = process.env;
 function resolve(dir) {
     return path.join(__dirname, '.', dir);
@@ -25,34 +26,25 @@ module.exports = {
         }
     },
     configureWebpack: config => {
+        const plugins = [];
         //配置别名
         config.resolve.alias = {
             '@': resolve('src')
         };
-        const plugins = [];
 
-        if (NODE_ENV === 'production') {
+        if (cdn.isUse && NODE_ENV === cdn.mode) {
             //使用cdn
-            config.externals = {
-                axios: 'axios',
-                vue: 'Vue',
-                vuex: 'Vuex',
-                'vue-router': 'VueRouter',
-                'element-ui': 'ELEMENT'
-            };
+            config.externals = cdn.externals;
+
             for (let item of config.plugins) {
                 if (item instanceof HtmlWebpackPlugin) {
-                    item.options.cdnConfig = [
-                        `https://cdn.bootcss.com/axios/0.18.0/axios.min.js`,
-                        `https://cdn.bootcss.com/vue/2.6.10/vue.min.js`,
-                        `https://cdn.bootcss.com/vuex/3.1.0/vuex.min.js`,
-                        `https://cdn.bootcss.com/vue-router/3.0.3/vue-router.min.js`,
-                        `https://unpkg.com/element-ui/lib/theme-chalk/index.css`,
-                        `https://unpkg.com/element-ui/lib/index.js`
-                    ];
+                    item.options.cdnCSSList = cdn.cdnCSSList;
+                    item.options.cdnJSList = cdn.cdnJSList;
                     break;
                 }
             }
+        }
+        if (NODE_ENV === 'production') {
             //移除console
             plugins.push(
                 new UglifyJsPlugin({

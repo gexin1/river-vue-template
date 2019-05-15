@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import defaultAvator from '@/assets/user/logo.png';
+import defaultAvator from '@/assets/user/logo.jpeg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
