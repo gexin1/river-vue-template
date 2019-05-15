@@ -1,6 +1,6 @@
 const routerFilter = routerList => {
     return routerList.filter(item => {
-        if (item.hide) {
+        if (item.meta && item.meta.sideHide) {
             return false;
         }
         if (item.children && item.children.length > 0) {

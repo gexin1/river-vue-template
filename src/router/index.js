@@ -41,15 +41,19 @@ const router = new Router({
             name: 'login',
             meta: {
                 name: '登录',
-                icon: 'home'
+                icon: 'home',
+                tagHide: true,
+                sideHide: true
             },
-            component: () => import('@/views/login/index.vue'),
-            hide: true
+            component: () => import('@/views/login/index.vue')
         },
         {
             path: '*',
-            component: () => import('@/views/error/404.vue'),
-            hide: true
+            meta: {
+                tagHide: true,
+                sideHide: true
+            },
+            component: () => import('@/views/error/404.vue')
         }
     ]
 });
