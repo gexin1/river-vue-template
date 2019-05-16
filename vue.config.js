@@ -32,9 +32,8 @@ module.exports = {
         config.resolve.alias = {
             '@': resolve('src')
         };
-
+        //使用cdn
         if (cdn.isUse && NODE_ENV === cdn.mode) {
-            //使用cdn
             config.externals = cdn.externals;
 
             for (let item of config.plugins) {
@@ -45,12 +44,12 @@ module.exports = {
                 }
             }
         }
-        //lodash
-        //配置参考https://github.com/lodash/lodash-webpack-plugin#readme
-        plugins.push(new LodashModuleReplacementPlugin());
 
         if (NODE_ENV === 'production') {
-            //移除console
+            //lodash
+            //配置参考https://github.com/lodash/lodash-webpack-plugin#readme
+            plugins.push(new LodashModuleReplacementPlugin());
+            //移除console debugger
             plugins.push(
                 new UglifyJsPlugin({
                     uglifyOptions: {
