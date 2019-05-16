@@ -59,6 +59,10 @@ npm run build:release 发布打包
         |   |-- util.js
         |-- views
 ```
+### lodash 加载优化 
+* 使用lodash-es 可以使用treeshake
+* 使用webpack 插件进一步压缩lodash
+* 配置参考https://github.com/lodash/lodash-webpack-plugin#readme
 ### cdn-config.js
 启动cdn配置会减少app包的体积 网络请求会更快 
 ```

@@ -1,6 +1,7 @@
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const cdn = require('./cdn-config');
 const { NODE_ENV } = process.env;
 function resolve(dir) {
@@ -44,6 +45,10 @@ module.exports = {
                 }
             }
         }
+        //lodash
+        //配置参考https://github.com/lodash/lodash-webpack-plugin#readme
+        plugins.push(new LodashModuleReplacementPlugin());
+
         if (NODE_ENV === 'production') {
             //移除console
             plugins.push(
@@ -68,6 +73,7 @@ module.exports = {
             .rule('svg')
             .exclude.add(resolve('src/icons'))
             .end();
+
         config.module
             .rule('icons')
             .test(/\.svg$/)
@@ -79,5 +85,22 @@ module.exports = {
                 symbolId: 'icon-[name]'
             })
             .end();
+        if (NODE_ENV === 'production') {
+            //配置 lodash
+            config.module
+                .rule('lodash-code-split')
+                .exclude.add(resolve('node_modules'))
+                .add(resolve('dist'))
+                .add(resolve('test'))
+                .end()
+                .test(/\.js$/)
+                .use('babel-loader')
+                .loader('babel-loader')
+                .options({
+                    presets: ['@babel/preset-env'],
+                    plugins: ['lodash']
+                })
+                .end();
+        }
     }
 };
