@@ -2,8 +2,10 @@ const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+    .BundleAnalyzerPlugin;
 const cdn = require('./cdn-config');
-const { NODE_ENV } = process.env;
+const { NODE_ENV, VUE_APP_DIST_SIZE_ANALYZE } = process.env;
 function resolve(dir) {
     return path.join(__dirname, '.', dir);
 }
@@ -43,6 +45,15 @@ module.exports = {
                     break;
                 }
             }
+        }
+
+        //dist目录代码大小分析
+        if (VUE_APP_DIST_SIZE_ANALYZE) {
+            plugins.push(
+                new BundleAnalyzerPlugin({
+                    analyzerMode: 'static'
+                })
+            );
         }
 
         if (NODE_ENV === 'production') {

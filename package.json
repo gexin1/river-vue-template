@@ -6,7 +6,7 @@
         "dev": "vue-cli-service serve",
         "serve": "vue-cli-service serve",
         "test:config": "vue inspect > test/vue-config-test",
-        "build:dev": "vue-cli-service build --mode development",
+        "build:dev": "vue-cli-service build --mode build-dev",
         "build:release": "vue-cli-service build",
         "lint": "vue-cli-service lint"
     },
@@ -35,7 +35,8 @@
         "sass-loader": "^7.1.0",
         "svg-sprite-loader": "^4.1.6",
         "uglifyjs-webpack-plugin": "^2.1.2",
-        "vue-template-compiler": "^2.5.21"
+        "vue-template-compiler": "^2.5.21",
+        "webpack-bundle-analyzer": "^3.3.2"
     },
     "gitHooks": {
         "pre-commit": "lint-staged"
