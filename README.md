@@ -40,7 +40,7 @@ npm run build:release 发布打包
         |   |-- Pagination
         |   |-- SvgIcon
         |   |-- tags-select-view
-        |-- global-import
+        |-- import
         |   |-- filter.js
         |   |-- index.js
         |   |-- mixins.js

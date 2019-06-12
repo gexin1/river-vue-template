@@ -8,12 +8,14 @@
         </div>
         <div class="breadcrumb">
             <el-breadcrumb separator="/" separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item
-                    v-for="(item, index) in breadlist"
-                    :key="index"
-                    :to="{ path: item.path }"
-                    >{{ item.meta.name }}</el-breadcrumb-item
-                >
+                <transition-group name="breadcrumb">
+                    <el-breadcrumb-item
+                        v-for="item in breadlist"
+                        :key="item.path"
+                        :to="{ path: item.path }"
+                        >{{ item.meta.name }}</el-breadcrumb-item
+                    >
+                </transition-group>
             </el-breadcrumb>
         </div>
         <div class="user_name">{{ userInfo.nickname }}</div>
@@ -58,18 +60,18 @@ export default {
         this.checkUserInfo();
     },
     methods: {
-        ...mapMutations('app', ['slideBarCollapseChange']),
-        ...mapMutations('userInfo', ['clearUserInfo']),
-        ...mapActions('userInfo', ['reqGetUserInfo']),
+        ...mapMutations('app', ['SLIDE_BAR_COLLAPSE_CHANGE']),
+        ...mapMutations('userInfo', ['CLEAR_USER_INFO']),
+        ...mapActions('userInfo', ['REQ_GET_USER_INFO']),
         menuChange() {
-            this.slideBarCollapseChange();
+            this.SLIDE_BAR_COLLAPSE_CHANGE();
         },
         getBread() {
             this.breadlist = this.$route.matched;
         },
         checkUserInfo() {
             if (JSON.stringify(this.userInfo) === '{}') {
-                this.reqGetUserInfo();
+                this.REQ_GET_USER_INFO();
             }
         },
         handleCommand(e) {
@@ -81,7 +83,7 @@ export default {
             }
         },
         loginOut() {
-            this.clearUserInfo();
+            this.CLEAR_USER_INFO();
             this.$router.push({ path: '/login' });
         }
     },
@@ -95,6 +97,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.breadcrumb-enter-active,
+.breadcrumb-leave-active {
+    transition: all 0.5s;
+}
+
+.breadcrumb-enter,
+.breadcrumb-leave-active {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.breadcrumb-move {
+    transition: all 0.5s;
+}
+
+.breadcrumb-leave-active {
+    position: absolute;
+}
 .nav_bar {
     display: flex;
     align-items: center;
@@ -107,7 +127,7 @@ export default {
         cursor: pointer;
         transition: all ease 0.5s;
         &.active {
-            transform: rotate(-90deg);
+            transform: rotate(90deg);
         }
     }
     .breadcrumb {

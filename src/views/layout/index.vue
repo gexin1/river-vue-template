@@ -38,26 +38,30 @@
 <script>
 import SideBar from './components/SideBar';
 import NavBar from './components/NavBar';
-import { routerFilter } from '@/utils/util';
+import { routerFilter } from '@/utils/routerHelp';
 import { mapGetters } from 'vuex';
 export default {
     name: 'Layout',
     data() {
-        return { routerList: [] };
+        return {};
     },
     computed: {
         ...mapGetters('app', {
             collapseStatus: 'slideBarCollapseStatus'
-        })
+        }),
+        ...mapGetters('permissionsRouter', {
+            permissionsRouter: 'permissionsRouter'
+        }),
+        routerList() {
+            return routerFilter(this.permissionsRouter);
+        }
     },
     components: {
         SideBar,
         NavBar
     },
     filters: {},
-    created() {
-        this.routerList = routerFilter(this.$router.options.routes);
-    },
+    created() {},
     methods: {}
 };
 </script>

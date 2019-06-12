@@ -1,5 +1,4 @@
-const ADD_ROUTE = `ADD_ROUTE`;
-const DEL_ROUTE = `DEL_ROUTE`;
+import { ADD_ROUTE, DEL_ROUTE, DEL_OTHER_ROUTE } from '@/store/type';
 const state = {
     visitedViews: [],
     cachedViews: []
@@ -10,19 +9,19 @@ const getters = {
     }
 };
 const mutations = {
-    ADD_ROUTE: (state, { payload }) => {
+    [ADD_ROUTE]: (state, { payload }) => {
         let { visitedViews } = state;
         if (!visitedViews.some(item => item.path === payload.path)) {
             state.visitedViews = [...visitedViews, payload];
         }
     },
-    DEL_ROUTE: (state, payload) => {
+    [DEL_ROUTE]: (state, payload) => {
         let { visitedViews } = state;
         state.visitedViews = visitedViews.filter(
             item => item.path !== payload.path
         );
     },
-    DEL_OTHER_ROUTE: (state, payload) => {
+    [DEL_OTHER_ROUTE]: (state, payload) => {
         let { visitedViews } = state;
         state.visitedViews = visitedViews.filter(
             item => item.path === payload.path

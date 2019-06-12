@@ -32,6 +32,7 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex';
+import { DEL_ROUTE, ADD_ROUTE, DEL_OTHER_ROUTE } from '@/store/type';
 export default {
     name: 'TagsView',
     data() {
@@ -50,7 +51,7 @@ export default {
     },
     mounted() {},
     methods: {
-        ...mapMutations('tagsView', ['DEL_ROUTE', 'DEL_OTHER_ROUTE']),
+        ...mapMutations('tagsView', [DEL_ROUTE, DEL_OTHER_ROUTE, ADD_ROUTE]),
         isActive(route) {
             return route.path === this.$route.path;
         },
@@ -132,7 +133,17 @@ export default {
         $route: {
             immediate: true,
             deep: true,
-            handler(val) {
+            handler(to) {
+                if (!to.meta.tagHide) {
+                    this.ADD_ROUTE({
+                        payload: {
+                            path: to.path,
+                            name: to.meta.name,
+                            fullPath: to.fullPath,
+                            query: to.query
+                        }
+                    });
+                }
                 this.refreshTagPosition();
             }
         },

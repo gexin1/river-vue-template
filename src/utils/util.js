@@ -1,14 +1,7 @@
-const routerFilter = routerList => {
-    return routerList.filter(item => {
-        if (item.meta && item.meta.sideHide) {
-            return false;
-        }
-        if (item.children && item.children.length > 0) {
-            item.children = routerFilter(item.children);
-        }
-        return true;
-    });
-};
+/**
+ * 去除首位空格
+ * @param {*} str
+ */
 const trim = str => {
     if (str == undefined) {
         return undefined;
@@ -17,4 +10,23 @@ const trim = str => {
     return str;
 };
 
-export { routerFilter, trim };
+/**
+ * 检查一个值是否为空
+ * @param {*} value
+ * @returns {Boolean}
+ */
+function isEmpty(value) {
+    if (Array.isArray(value)) {
+        return value.length === 0;
+    } else if (typeof value === 'object') {
+        if (value) {
+            for (const _ in value) {
+                return false;
+            }
+        }
+        return true;
+    } else {
+        return !value;
+    }
+}
+export { trim, isEmpty };

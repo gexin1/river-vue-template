@@ -41,7 +41,7 @@ request.interceptors.response.use(
                 return Promise.resolve(data);
             } else if ([65264, 65535].includes(data.f)) {
                 //如果 状态为 就去登录
-                that.$VM.$router.push({ path: '/login' });
+                that.$VM.$router.push({ path: '/login', replace: true });
                 Notification({
                     title: '提示',
                     message: data.m,
