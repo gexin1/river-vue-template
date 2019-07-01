@@ -1,37 +1,35 @@
 <template>
-    <div class="layout">
-        <el-container>
-            <el-aside>
-                <el-menu
-                    :show-timeout="200"
-                    :default-active="$route.path"
+    <div class="main">
+        <Layout>
+            <Sider
+                ef="side1"
+                hide-trigger
+                collapsible
+                :collapsed-width="78"
+                v-model="isCollapsed"
+            >
+                <Menu
+                    :active-name="$route.path"
                     :collapse="collapseStatus"
                     mode="vertical"
-                    background-color="#304156"
-                    text-color="#bfcbd9"
-                    active-text-color="#409EFF"
                     router
-                    class="menu_vertical"
-                    style="height:100%"
+                    width="auto"
+                    style="height:100vh;"
                 >
                     <SideBar :router-list="routerList"></SideBar>
-                </el-menu>
-            </el-aside>
-            <el-container>
-                <el-header>
+                </Menu>
+            </Sider>
+            <Layout>
+                <Header>
                     <NavBar></NavBar>
-                </el-header>
-                <div class="tag-select-view">
-                    <tags-select-view></tags-select-view>
-                </div>
-
-                <el-main>
+                </Header>
+                <Content>
                     <transition name="fade-transverse" mode="out-in">
                         <router-view />
                     </transition>
-                </el-main>
-            </el-container>
-        </el-container>
+                </Content>
+            </Layout>
+        </Layout>
     </div>
 </template>
 
@@ -41,9 +39,9 @@ import NavBar from './components/NavBar';
 import { routerFilter } from '@/utils/util';
 import { mapGetters } from 'vuex';
 export default {
-    name: 'Layout',
+    name: 'Main',
     data() {
-        return { routerList: [] };
+        return { routerList: [], isCollapsed: false };
     },
     computed: {
         ...mapGetters('app', {
@@ -64,35 +62,67 @@ export default {
 
 <style lang="scss" scoped>
 .layout {
+    border: 1px solid #d7dde4;
+    background: #f5f7f9;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.layout-header-bar {
+    background: #fff;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.layout-logo-left {
+    width: 90%;
+    height: 30px;
+    background: #5b6270;
+    border-radius: 3px;
+    margin: 15px auto;
+}
+.menu-icon {
+    transition: all 0.3s;
+}
+.rotate-icon {
+    transform: rotate(-90deg);
+}
+.menu-item span {
+    display: inline-block;
+    overflow: hidden;
+    width: 69px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+    transition: width 0.2s ease 0.2s;
+}
+.menu-item i {
+    transform: translateX(0px);
+    transition: font-size 0.2s ease, transform 0.2s ease;
+    vertical-align: middle;
+    font-size: 16px;
+}
+.collapsed-menu span {
+    width: 0px;
+    transition: width 0.2s ease;
+}
+.collapsed-menu i {
+    transform: translateX(5px);
+    transition: font-size 0.2s ease 0.2s, transform 0.2s ease 0.2s;
+    vertical-align: middle;
+    font-size: 22px;
+}
+
+.main {
     width: 100%;
     height: 100vh;
-    & /deep/ .el-aside {
-        width: auto !important;
-    }
-    & /deep/ .menu_vertical:not(.el-menu--collapse) {
-        width: 200px;
-    }
-    & /deep/ .el-menu--collapse {
-        .el-submenu__icon-arrow {
-            display: none;
-        }
-        .title_name_icon {
-            display: none;
-        }
-    }
-    & /deep/ .el-container {
-        height: 100vh;
-    }
-    & /deep/ .el-submenu {
-        overflow-x: hidden;
-    }
-    & /deep/ .el-header {
+    /deep/ .ivu-layout-header {
+        background: #fff;
         padding: 0;
     }
-    & /deep/ *[class^='el-icon-'] {
-        font-size: 13px;
-    }
 
+    /deep/ .ivu-layout-content {
+        padding: 20px;
+        box-sizing: border-box;
+    }
     // 过渡动画 横向渐变
     .fade-transverse-leave-active,
     .fade-transverse-enter-active {
@@ -119,12 +149,6 @@ export default {
     .fade-scale-leave-to {
         opacity: 0;
         transform: scale(0.8);
-    }
-    .tag-select-view {
-        flex: none;
-        // padding: 0 20px;
-        box-sizing: border-box;
-        border-bottom: 1px solid #ddd;
     }
 }
 </style>

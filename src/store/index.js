@@ -1,12 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import app from './modules/app';
+
+import app from './modules/app.js';
 import userInfo from './modules/user-info';
-import tagsView from './modules/tags-view';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    modules: { app, userInfo, tagsView },
-    actions: {}
+    modules: {
+        app,
+        userInfo
+    }
 });

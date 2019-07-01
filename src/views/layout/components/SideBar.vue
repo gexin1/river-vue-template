@@ -1,8 +1,9 @@
 <template>
     <div>
         <div v-for="(item, index) in routerList" :key="index">
-            <el-submenu
-                :index="resolvePath(item.path)"
+            <Submenu
+                :to="resolvePath(item.path)"
+                :name="resolvePath(item.path)"
                 v-if="item.children && item.children.length > 0"
             >
                 <template slot="title">
@@ -10,7 +11,6 @@
                         <svg-icon :icon-class="item.meta.icon" />
                     </i>
                     <span
-                        slot="title"
                         :class="
                             !item.meta.icon ? 'title_name' : 'title_name_icon'
                         "
@@ -21,20 +21,22 @@
                     :router-list="item.children"
                     :base-path="item.path"
                 ></SlideBar>
-            </el-submenu>
+            </Submenu>
             <template v-else>
-                <el-menu-item :index="resolvePath(item.path)">
+                <MenuItem
+                    :to="resolvePath(item.path)"
+                    :name="resolvePath(item.path)"
+                >
                     <i class="el-icon-" v-if="item.meta.icon">
                         <svg-icon :icon-class="item.meta.icon" />
                     </i>
                     <span
-                        slot="title"
                         :class="
                             !item.meta.icon ? 'title_name' : 'title_name_icon'
                         "
                         >{{ item.meta.name }}</span
                     >
-                </el-menu-item>
+                </MenuItem>
             </template>
         </div>
     </div>
@@ -64,6 +66,7 @@ export default {
     created() {},
     methods: {
         resolvePath(routePath) {
+            console.log(path.resolve(this.basePath, routePath));
             return path.resolve(this.basePath, routePath);
         }
     }

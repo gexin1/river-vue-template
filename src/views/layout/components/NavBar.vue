@@ -7,17 +7,17 @@
             <svg-icon icon-class="menu" />
         </div>
         <div class="breadcrumb">
-            <el-breadcrumb separator="/" separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item
+            <Breadcrumb>
+                <BreadcrumbItem
                     v-for="(item, index) in breadlist"
                     :key="index"
                     :to="{ path: item.path }"
-                    >{{ item.meta.name }}</el-breadcrumb-item
+                    >{{ item.meta.name }}</BreadcrumbItem
                 >
-            </el-breadcrumb>
+            </Breadcrumb>
         </div>
         <div class="user_name">{{ userInfo.nickname }}</div>
-        <el-dropdown @click="loginOut" @command="handleCommand">
+        <Dropdown trigger="hover" @on-click="handleCommand">
             <span class="el-dropdown-link">
                 <div class="user_info">
                     <div class="avator">
@@ -28,11 +28,11 @@
                     </div>
                 </div>
             </span>
-            <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="HOME">HOME</el-dropdown-item>
-                <el-dropdown-item command="LOGINOUT">退出</el-dropdown-item>
-            </el-dropdown-menu>
-        </el-dropdown>
+            <DropdownMenu slot="list">
+                <DropdownItem name="HOME">HOME</DropdownItem>
+                <DropdownItem name="LOGINOUT">退出</DropdownItem>
+            </DropdownMenu>
+        </Dropdown>
     </div>
 </template>
 
