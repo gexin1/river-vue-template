@@ -1,6 +1,10 @@
 <template>
-    <svg :class="svgClass" aria-hidden="true">
-        <use :xlink:href="iconName"></use>
+    <svg
+        :class="svgClass"
+        aria-hidden="true"
+        :style="{ fontSize: size + 'px' }"
+    >
+        <use :xlink:href="iconName" />
     </svg>
 </template>
 
@@ -10,11 +14,16 @@ export default {
     props: {
         iconClass: {
             type: String,
+            default: 'home',
             required: true
         },
         className: {
             type: String,
             default: ''
+        },
+        size: {
+            type: Number,
+            default: 16
         }
     },
     computed: {

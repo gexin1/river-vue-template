@@ -4,7 +4,7 @@
             :class="{ menu_icon: true, active: collapseStatus }"
             @click="menuChange"
         >
-            <svg-icon icon-class="menu" />
+            <svg-icon icon-class="menu" :size="22" />
         </div>
         <div class="breadcrumb">
             <Breadcrumb>
@@ -50,7 +50,7 @@ export default {
             userInfo: 'getUserInfo'
         }),
         ...mapGetters('app', {
-            collapseStatus: 'slideBarCollapseStatus'
+            collapseStatus: 'sideCollapseGetter'
         })
     },
     created() {
@@ -58,11 +58,11 @@ export default {
         this.checkUserInfo();
     },
     methods: {
-        ...mapMutations('app', ['slideBarCollapseChange']),
+        ...mapMutations('app', ['TOGGLE_SIDE_COLLAPSE']),
         ...mapMutations('userInfo', ['clearUserInfo']),
         ...mapActions('userInfo', ['reqGetUserInfo']),
         menuChange() {
-            this.slideBarCollapseChange();
+            this.TOGGLE_SIDE_COLLAPSE();
         },
         getBread() {
             this.breadlist = this.$route.matched;
@@ -104,6 +104,7 @@ export default {
     box-sizing: border-box;
     padding: 0 20px;
     .menu_icon {
+        line-height: initial;
         cursor: pointer;
         transition: all ease 0.5s;
         &.active {

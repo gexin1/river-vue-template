@@ -1,14 +1,15 @@
+const TOGGLE_SIDE_COLLAPSE = `TOGGLE_SIDE_COLLAPSE`;
 const state = {
-    collapse: false
+    sideCollapse: false
 };
 const getters = {
-    slideBarCollapseStatus: () => {
-        return state.collapse;
+    sideCollapseGetter: state => {
+        return state.sideCollapse;
     }
 };
 const mutations = {
-    slideBarCollapseChange: state => {
-        state.collapse = !state.collapse;
+    [TOGGLE_SIDE_COLLAPSE]: state => {
+        state.sideCollapse = !state.sideCollapse;
     }
 };
 const actions = {};
