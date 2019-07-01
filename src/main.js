@@ -3,7 +3,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router/index';
 import store from './store/index';
-
+import config from '@/config';
 import TagsSelectView from '@/components/tags-select-view/index.js';
 
 //框架
@@ -23,6 +23,10 @@ import './styles/global.scss';
 
 Vue.config.productionTip = false;
 
+/**
+ * @description 全局注册应用配置
+ */
+Vue.prototype.$config = config;
 Vue.prototype.$VM = new Vue({
     router,
     store,

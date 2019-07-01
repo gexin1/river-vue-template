@@ -148,7 +148,7 @@ export default {
                 .filter(item => item !== name);
         },
         updateOpenName(name) {
-            if (name === this.$config.homeName) this.openedNames = [];
+            if (name === 'home') this.openedNames = [];
             else this.openedNames = this.getOpenedNamesByActiveName(name);
         }
     },

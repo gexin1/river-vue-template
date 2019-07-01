@@ -4,7 +4,7 @@
             <Sider
                 hide-trigger
                 collapsible
-                :width="256"
+                :width="200"
                 :collapsed-width="64"
                 v-model="sideCollapseGetter"
                 class="left-sider"
@@ -37,9 +37,21 @@
                     <NavBar></NavBar>
                 </Header>
                 <Content>
-                    <transition name="fade-transverse" mode="out-in">
-                        <router-view />
-                    </transition>
+                    <Layout class="main-layout-con">
+                        <div class="tag-nav-wrapper">
+                            <tags-nav
+                                :value="$route"
+                                @input="handleClick"
+                                :list="visitedViewsGetter"
+                                @on-close="handleCloseTag"
+                            />
+                        </div>
+                        <Content class="content-wrapper">
+                            <transition name="fade-transverse" mode="out-in">
+                                <router-view />
+                            </transition>
+                        </Content>
+                    </Layout>
                 </Content>
             </Layout>
         </Layout>
@@ -51,9 +63,10 @@ import SideBar from './components/SideBar';
 import NavBar from './components/NavBar';
 import SideMenu from './components/side-menu/index';
 import { routerFilter } from '@/utils/util';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import minLogo from '@/assets/imgs/logo-min.jpg';
 import maxLogo from '@/assets/imgs/logo.jpg';
+import TagsNav from './components/tags-nav';
 export default {
     name: 'Main',
     data() {
@@ -66,18 +79,62 @@ export default {
         };
     },
     computed: {
-        ...mapGetters('app', ['sideCollapseGetter'])
+        ...mapGetters('app', ['sideCollapseGetter']),
+        ...mapGetters('tagsNav', ['visitedViewsGetter'])
     },
     components: {
         NavBar,
-        SideMenu
+        SideMenu,
+        TagsNav
     },
     filters: {},
     created() {
         this.routerList = routerFilter(this.$router.options.routes);
     },
     methods: {
-        turnToPage() {}
+        ...mapMutations('tagsNav', [
+            'SET_ROUTE',
+            'ADD_ROUTE',
+            'DEL_ROUTE',
+            'DEL_OTHER_ROUTE'
+        ]),
+        handleClick(item) {
+            this.turnToPage(item);
+        },
+        handleCloseTag(res) {
+            console.log(res);
+            this.SET_ROUTE({
+                payload: res
+            });
+        },
+        turnToPage(route) {
+            let { name, params, query } = {};
+            if (typeof route === 'string') name = route;
+            else {
+                name = route.name;
+                params = route.params;
+                query = route.query;
+            }
+            if (name.indexOf('isTurnByHref_') > -1) {
+                window.open(name.split('_')[1]);
+                return;
+            }
+            this.$router.push({
+                name,
+                params,
+                query
+            });
+        }
+    },
+    watch: {
+        $route: {
+            handler(newRoute) {
+                this.ADD_ROUTE({
+                    payload: newRoute
+                });
+            },
+            immediate: true
+        }
     }
 };
 </script>
@@ -92,7 +149,6 @@ export default {
     }
 
     /deep/ .ivu-layout-content {
-        padding: 20px;
         box-sizing: border-box;
     }
     .left-sider {

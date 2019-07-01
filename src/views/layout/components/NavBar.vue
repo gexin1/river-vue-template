@@ -4,7 +4,7 @@
             :class="{ menu_icon: true, active: collapseStatus }"
             @click="menuChange"
         >
-            <svg-icon icon-class="menu" :size="22" />
+            <svg-icon icon-class="menu" :size="20" />
         </div>
         <div class="breadcrumb">
             <Breadcrumb>
