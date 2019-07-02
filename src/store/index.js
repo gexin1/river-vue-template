@@ -1,12 +1,19 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import getters from './getters';
 import app from './modules/app';
-import userInfo from './modules/user-info';
-import tagsView from './modules/tags-view';
+import settings from './modules/settings';
+import user from './modules/user';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-    modules: { app, userInfo, tagsView },
-    actions: {}
+const store = new Vuex.Store({
+    modules: {
+        app,
+        settings,
+        user
+    },
+    getters
 });
+
+export default store;
