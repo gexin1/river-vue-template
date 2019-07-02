@@ -224,7 +224,14 @@ export default {
         }
     }
 }
-
+</style>
+<style lang="scss">
+.ivu-menu-item > i {
+    margin-right: 12px !important;
+}
+.ivu-menu-submenu > .ivu-menu > .ivu-menu-item > i {
+    margin-right: 8px !important;
+}
 .collased-menu-dropdown {
     width: 100%;
     margin: 0;

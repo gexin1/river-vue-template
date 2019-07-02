@@ -8,12 +8,22 @@
         </div>
         <div class="breadcrumb">
             <Breadcrumb>
-                <BreadcrumbItem
-                    v-for="(item, index) in breadlist"
-                    :key="index"
-                    :to="{ path: item.path }"
-                    >{{ item.meta.name }}</BreadcrumbItem
-                >
+                <BreadcrumbItem to="/">
+                    <svg-icon
+                        icon-class="home"
+                        class="breadcrumb-svg-icon"
+                        :size="12"
+                    ></svg-icon>
+                    <span class="breadcrumb-text">Home</span>
+                </BreadcrumbItem>
+                <BreadcrumbItem v-for="(item, index) in breadlist" :key="index">
+                    <svg-icon
+                        icon-class="home"
+                        class="breadcrumb-svg-icon"
+                        :size="12"
+                    ></svg-icon>
+                    <span class="breadcrumb-text">{{ item.meta.name }}</span>
+                </BreadcrumbItem>
             </Breadcrumb>
         </div>
         <div class="user_name">{{ userInfo.nickname }}</div>
@@ -103,6 +113,15 @@ export default {
     border-bottom: 1px solid #ddd;
     box-sizing: border-box;
     padding: 0 20px;
+
+    .breadcrumb-svg-icon {
+        margin-right: 4px;
+        position: relative;
+        top: -0px;
+    }
+    .breadcrumb-text {
+        vertical-align: middle;
+    }
     .menu_icon {
         line-height: initial;
         cursor: pointer;

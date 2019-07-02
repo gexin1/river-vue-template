@@ -2,9 +2,8 @@
 export default {
     components: {},
     methods: {
-        //showTitle(item, this)
         showTitle(item) {
-            return item.meta.name;
+            return item.meta.name || '';
         },
         showChildren(item) {
             return (

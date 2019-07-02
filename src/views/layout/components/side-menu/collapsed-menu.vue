@@ -14,7 +14,7 @@
         >
             <svg-icon :icon-class="parentItem.meta.icon"></svg-icon>
             <span class="menu-title" v-if="!hideTitle">{{
-                showTitle(parentItem)
+                parentItem.meta.name
             }}</span>
             <Icon
                 style="float: right;"
@@ -40,7 +40,7 @@
                         :size="iconSize"
                         :icon-class="child.meta.icon"
                     ></svg-icon>
-                    <span class="menu-title">{{ showTitle(child) }}</span>
+                    <span class="menu-title">{{ child.meta.name }}</span>
                 </DropdownItem>
             </template>
         </DropdownMenu>

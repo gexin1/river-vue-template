@@ -1,9 +1,35 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import hooks from './hooks';
+
+const Layout = () => import('@/views/layout/index.vue');
+
 Vue.use(Router);
 
 const routeList = [
+    {
+        path: '/',
+        name: '_home',
+        redirect: '/home',
+        component: Layout,
+        meta: {
+            tagHide: true,
+            sideHide: true
+        },
+        children: [
+            {
+                path: '/home',
+                name: 'home',
+                meta: {
+                    hideInMenu: true,
+                    name: '首页',
+                    notCache: true,
+                    icon: 'md-home'
+                },
+                component: () => import('@/views/home/index.vue')
+            }
+        ]
+    },
     //主页
     {
         path: '/',
@@ -12,13 +38,13 @@ const routeList = [
             name: '布局',
             icon: 'home'
         },
-        component: () => import('@/views/layout/index.vue'),
+        component: Layout,
         children: [
             {
                 path: 'page1',
                 name: 'page1',
                 meta: {
-                    name: 'page1',
+                    name: '页面1',
                     icon: 'home'
                 },
                 component: () => import('@/views/page1/index.vue')
@@ -27,7 +53,7 @@ const routeList = [
                 path: 'page2',
                 name: 'page2',
                 meta: {
-                    name: 'page2',
+                    name: 'page',
                     icon: 'home'
                 },
                 component: () => import('@/views/page2/index.vue')

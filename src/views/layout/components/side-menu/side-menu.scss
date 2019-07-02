@@ -1,39 +1,52 @@
-/deep/ .side-menu-wrapper {
+.side-menu-wrapper {
     user-select: none;
     // 菜单
-    /deep/ .menu-collapsed {
+    .menu-collapsed {
         padding-top: 10px;
-        /deep/ .ivu-dropdown {
+        .ivu-dropdown {
             width: 100%;
+            .svg-icon {
+                font-size: 20px !important;
+            }
         }
-        /deep/ .ivu-tooltip {
+        .ivu-tooltip {
             width: 100%;
-            /deep/ .ivu-tooltip-rel {
+            .ivu-tooltip-rel {
                 width: 100%;
             }
-            /deep/ .ivu-tooltip-popper .ivu-tooltip-content {
-                /deep/ .ivu-tooltip-arrow {
+            .ivu-tooltip-popper .ivu-tooltip-content {
+                .ivu-tooltip-arrow {
                     border-right-color: #fff;
                 }
-                /deep/ .ivu-tooltip-inner {
+                .ivu-tooltip-inner {
                     background: #fff;
                     color: #495060;
                 }
             }
         }
     }
-    /deep/ a.drop-menu-a {
+    a.drop-menu-a {
         display: inline-block;
         padding: 6px 15px;
         width: 100%;
         text-align: center;
-        color: #495060;
+        color: #fff;
     }
 }
 
-/deep/ .menu-title {
+.menu-title {
     padding-left: 6px;
 }
-/deep/ .menu-collapsed {
+.menu-collapsed {
     text-align: center;
+}
+.ivu-dropdown-transfer {
+    .ivu-dropdown-rel {
+        .drop-menu-a {
+            .svg-icon {
+                color: rgb(73, 80, 96);
+            }
+            color: #515a6e;
+        }
+    }
 }
