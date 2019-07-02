@@ -60,6 +60,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 /deep/ .menu-icon {
-    margin-right: 12px;
+    margin-right: 8px;
 }
 </style>

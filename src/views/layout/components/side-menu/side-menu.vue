@@ -24,6 +24,7 @@
                         :key="`menu-${item.children[0].name}`"
                     >
                         <svg-icon
+                            class="menu-icon"
                             :icon-class="item.children[0].meta.icon"
                         ></svg-icon>
                         <span>{{ showTitle(item.children[0]) }}</span>
@@ -40,7 +41,10 @@
                         :name="getNameOrHref(item)"
                         :key="`menu-${item.name}`"
                     >
-                        <svg-icon :icon-class="item.meta.icon"></svg-icon>
+                        <svg-icon
+                            class="menu-icon"
+                            :icon-class="item.meta.icon"
+                        ></svg-icon>
                         <span>{{ showTitle(item) }}</span>
                     </menu-item>
                 </template>
@@ -77,6 +81,7 @@
                         :style="{ textAlign: 'center' }"
                     >
                         <svg-icon
+                            class="menu-icon"
                             :icon-class="
                                 item.icon ||
                                     (item.children && item.children[0].icon)
@@ -185,5 +190,8 @@ export default {
 };
 </script>
 <style lang="scss">
+.menu-icon {
+    margin-right: 8px;
+}
 @import './side-menu.scss';
 </style>

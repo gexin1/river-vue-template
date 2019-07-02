@@ -1,15 +1,5 @@
 import { Modal } from 'iview';
-const routerFilter = routerList => {
-    return routerList.filter(item => {
-        if (item.meta && item.meta.sideHide) {
-            return false;
-        }
-        if (item.children && item.children.length > 0) {
-            item.children = routerFilter(item.children);
-        }
-        return true;
-    });
-};
+
 const trim = str => {
     if (str == undefined) {
         return undefined;
@@ -51,8 +41,7 @@ const objEqual = (obj1, obj2) => {
     const keysArr2 = Object.keys(obj2);
     if (keysArr1.length !== keysArr2.length) return false;
     else if (keysArr1.length === 0 && keysArr2.length === 0) return true;
-    /* eslint-disable-next-line */ else
-        return !keysArr1.some(key => obj1[key] != obj2[key]);
+    else return !keysArr1.some(key => obj1[key] != obj2[key]);
 };
 
 /**
@@ -99,14 +88,58 @@ const beforeClose = {
         });
     }
 };
+/**
+ * 计算路由过滤掉隐藏的路由
+ * @param {*} routerList
+ */
+const calcRouter = (routerList, flags = ['sideHide']) => {
+    return routerList.filter(item => {
+        while (true) {
+            if (!item.meta) {
+                break;
+            }
+            let metaKeys = Object.keys(item.meta);
+            if (flags.some(key => metaKeys.includes(key) && item.meta[key])) {
+                return false;
+            }
+            break;
+        }
+        if (item.children && item.children.length > 0) {
+            item.children = calcRouter(item.children, flags);
+        }
+        return true;
+    });
+};
 
+/**
+ * @param {Array} routers 路由列表数组
+ * @description 用于找到路由列表中name为home的对象
+ */
+const findNameRoute = (routers, homeName = 'home') => {
+    let i = -1;
+    let len = routers.length;
+    let homeRoute = {};
+    while (++i < len) {
+        let item = routers[i];
+        if (item.children && item.children.length) {
+            let res = findNameRoute(item.children, homeName);
+            if (res.name) return res;
+        } else {
+            if (item.name === homeName) homeRoute = item;
+        }
+    }
+    return homeRoute;
+};
+
+const calcBreadcrumb = router => {};
 export {
-    routerFilter,
+    calcRouter,
     trim,
     getUnion,
     findNodeUpperByClasses,
     routeEqual,
     objEqual,
     showTitle,
-    beforeClose
+    beforeClose,
+    findNameRoute
 };

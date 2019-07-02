@@ -8,14 +8,6 @@
         </div>
         <div class="breadcrumb">
             <Breadcrumb>
-                <BreadcrumbItem to="/">
-                    <svg-icon
-                        icon-class="home"
-                        class="breadcrumb-svg-icon"
-                        :size="12"
-                    ></svg-icon>
-                    <span class="breadcrumb-text">Home</span>
-                </BreadcrumbItem>
                 <BreadcrumbItem v-for="(item, index) in breadlist" :key="index">
                     <svg-icon
                         icon-class="home"
@@ -48,6 +40,8 @@
 
 <script>
 import defaultAvator from '@/assets/user/logo.jpeg';
+import { calcRouter, findNameRoute } from '@/utils/util';
+import { routeList } from '@/router/index';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
@@ -75,7 +69,8 @@ export default {
             this.TOGGLE_SIDE_COLLAPSE();
         },
         getBread() {
-            this.breadlist = this.$route.matched;
+            let matchRouters = this.$route.matched;
+            this.breadlist = calcRouter(matchRouters, ['breadcrumbHide']);
         },
         checkUserInfo() {
             if (JSON.stringify(this.userInfo) === '{}') {
@@ -118,9 +113,11 @@ export default {
         margin-right: 4px;
         position: relative;
         top: -0px;
+        user-select: none;
     }
     .breadcrumb-text {
         vertical-align: middle;
+        user-select: none;
     }
     .menu_icon {
         line-height: initial;

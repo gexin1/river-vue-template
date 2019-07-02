@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Notification } from 'element-ui';
+import { Notice } from 'iview';
 import qs from 'qs';
 import Vue from 'vue';
 
@@ -15,17 +15,26 @@ const request = axios.create({
 request.interceptors.request.use(
     config => {
         let { method, data } = config;
-
-        if (['POST', 'PUT', 'DELETE'].includes(method.toUpperCase())) {
-            if (
-                typeof data === 'object' &&
-                config['headers']['Content-Type'].includes(
-                    'application/x-www-form-urlencoded'
-                )
-            ) {
-                config.data = qs.stringify(data);
+        const contentType = config['headers']['Content-Type'];
+        while (true) {
+            if (!['POST', 'PUT', 'DELETE'].includes(method.toUpperCase())) {
+                break;
             }
+
+            if (typeof data !== 'object') {
+                break;
+            }
+            if (contentType.includes('application/x-www-form-urlencoded')) {
+                config.data = qs.stringify(data);
+                break;
+            }
+            if (contentType.includes('application/json')) {
+                config.data = data;
+                break;
+            }
+            break;
         }
+
         return config;
     },
     error => {
@@ -42,26 +51,26 @@ request.interceptors.response.use(
             } else if ([65264, 65535].includes(data.f)) {
                 //如果 状态为 就去登录
                 that.$VM.$router.push({ path: '/login' });
-                Notification({
+
+                Notice.warning({
                     title: '提示',
-                    message: data.m,
-                    type: 'warning'
+                    desc: data.m
                 });
             } else {
                 throw data;
             }
         } catch (error) {
-            Notification.error({
+            Notice.error({
                 title: '错误',
-                message: error.m || error
+                desc: error.m || error
             });
             return Promise.reject(error);
         }
     },
     error => {
-        Notification.error({
+        Notice.error({
             title: '错误',
-            message: error.m || error
+            desc: error.m || error
         });
         return Promise.reject(error);
     }

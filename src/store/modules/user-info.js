@@ -1,4 +1,3 @@
-import { Loading } from 'element-ui';
 const state = {
     userInfo: {}
 };

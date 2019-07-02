@@ -59,11 +59,10 @@
 </template>
 
 <script>
-import SideBar from './components/SideBar';
+import { mapGetters, mapMutations } from 'vuex';
 import NavBar from './components/NavBar';
 import SideMenu from './components/side-menu/index';
-import { routerFilter } from '@/utils/util';
-import { mapGetters, mapMutations } from 'vuex';
+import { calcRouter } from '@/utils/util';
 import minLogo from '@/assets/imgs/logo-min.jpg';
 import maxLogo from '@/assets/imgs/logo.jpg';
 import TagsNav from './components/tags-nav';
@@ -89,7 +88,7 @@ export default {
     },
     filters: {},
     created() {
-        this.routerList = routerFilter(this.$router.options.routes);
+        this.routerList = calcRouter(this.$router.options.routes, ['sideHide']);
     },
     methods: {
         ...mapMutations('tagsNav', [
@@ -226,12 +225,6 @@ export default {
 }
 </style>
 <style lang="scss">
-.ivu-menu-item > i {
-    margin-right: 12px !important;
-}
-.ivu-menu-submenu > .ivu-menu > .ivu-menu-item > i {
-    margin-right: 8px !important;
-}
 .collased-menu-dropdown {
     width: 100%;
     margin: 0;
@@ -248,12 +241,6 @@ export default {
     }
     & * {
         color: #515a6e;
-    }
-    .ivu-menu-item > i {
-        margin-right: 12px !important;
-    }
-    .ivu-menu-submenu > .ivu-menu > .ivu-menu-item > i {
-        margin-right: 8px !important;
     }
 }
 

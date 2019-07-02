@@ -14,17 +14,16 @@ const routeList = [
         component: Layout,
         meta: {
             tagHide: true,
-            sideHide: true
+            breadcrumbHide: true,
+            sideHide: false
         },
         children: [
             {
                 path: '/home',
                 name: 'home',
                 meta: {
-                    hideInMenu: true,
                     name: '首页',
-                    notCache: true,
-                    icon: 'md-home'
+                    icon: 'home'
                 },
                 component: () => import('@/views/home/index.vue')
             }
@@ -44,8 +43,7 @@ const routeList = [
                 path: 'page1',
                 name: 'page1',
                 meta: {
-                    name: '页面1',
-                    icon: 'home'
+                    name: '页面1'
                 },
                 component: () => import('@/views/page1/index.vue')
             },
@@ -53,8 +51,7 @@ const routeList = [
                 path: 'page2',
                 name: 'page2',
                 meta: {
-                    name: 'page',
-                    icon: 'home'
+                    name: 'page'
                 },
                 component: () => import('@/views/page2/index.vue')
             }
@@ -67,7 +64,6 @@ const routeList = [
         meta: {
             name: '登录',
             icon: 'home',
-            tagHide: true,
             sideHide: true
         },
         component: () => import('@/views/login/index.vue')
@@ -75,7 +71,6 @@ const routeList = [
     {
         path: '*',
         meta: {
-            tagHide: true,
             sideHide: true
         },
         component: () => import('@/views/error/404.vue')

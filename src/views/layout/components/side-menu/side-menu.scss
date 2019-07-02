@@ -1,5 +1,4 @@
 .side-menu-wrapper {
-    user-select: none;
     // 菜单
     .menu-collapsed {
         padding-top: 10px;
@@ -13,6 +12,11 @@
             width: 100%;
             .ivu-tooltip-rel {
                 width: 100%;
+                text-align: center;
+                .menu-icon {
+                    font-size: 20px;
+                    margin-right: 0;
+                }
             }
             .ivu-tooltip-popper .ivu-tooltip-content {
                 .ivu-tooltip-arrow {
