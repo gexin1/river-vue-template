@@ -1,22 +1,13 @@
-const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
-const cdn = require('./cdn-config');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { dnsDeploy, cdnDeploy } = require('./deploy.config.js');
+const { findPlugin, resolve } = require('./vue.config.help.js');
 const { NODE_ENV, VUE_APP_DIST_SIZE_ANALYZE } = process.env;
-function resolve(dir) {
-    return path.join(__dirname, '.', dir);
-}
+
 module.exports = {
-    publicPath: '/',
     productionSourceMap: false,
-    devServer: {
-        disableHostCheck: true
-    },
     css: {
-        // 是否开启 CSS source map
         sourceMap: false,
         loaderOptions: {
             css: {
@@ -28,51 +19,31 @@ module.exports = {
             }
         }
     },
+    devServer: {
+        port: 8080
+    },
     configureWebpack: config => {
         const plugins = [];
         //配置别名
         config.resolve.alias = {
             '@': resolve('src')
         };
-        //使用cdn
-        if (cdn.isUse && NODE_ENV === cdn.mode) {
-            config.externals = cdn.externals;
-
-            for (let item of config.plugins) {
-                if (item instanceof HtmlWebpackPlugin) {
-                    item.options.cdnCSSList = cdn.cdnCSSList;
-                    item.options.cdnJSList = cdn.cdnJSList;
-                    break;
-                }
-            }
+        const htmlPlugin = findPlugin(config, HtmlWebpackPlugin);
+        //使用dns预解析
+        if (dnsDeploy.isUse && NODE_ENV === dnsDeploy.mode) {
+            htmlPlugin.options.dnsDeploy = dnsDeploy.list;
         }
-
+        //添加 cdn
+        if (cdnDeploy.isUse && NODE_ENV === cdnDeploy.mode) {
+            htmlPlugin.options.cdnCSSList = cdnDeploy.cdnCSSList;
+            htmlPlugin.options.cdnJSList = cdnDeploy.cdnJSList;
+            config.externals = cdnDeploy.externals;
+        }
         //dist目录代码大小分析
         if (VUE_APP_DIST_SIZE_ANALYZE) {
             plugins.push(
                 new BundleAnalyzerPlugin({
                     analyzerMode: 'static'
-                })
-            );
-        }
-
-        if (NODE_ENV === 'production') {
-            //lodash
-            //配置参考https://github.com/lodash/lodash-webpack-plugin#readme
-            plugins.push(new LodashModuleReplacementPlugin());
-            //移除console debugger
-            plugins.push(
-                new UglifyJsPlugin({
-                    uglifyOptions: {
-                        compress: {
-                            warnings: false,
-                            drop_console: true,
-                            drop_debugger: true,
-                            pure_funcs: ['console.log']
-                        }
-                    },
-                    sourceMap: false,
-                    parallel: true
                 })
             );
         }
