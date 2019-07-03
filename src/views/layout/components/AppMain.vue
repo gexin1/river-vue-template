@@ -19,22 +19,14 @@ export default {
 
 <style scoped>
 .app-main {
-    /*50 = navbar  */
-    min-height: calc(100vh - 50px);
+    height: 100vh;
     width: 100%;
     position: relative;
-    overflow: hidden;
+    box-sizing: border-box;
+    overflow: auto;
 }
 .fixed-header + .app-main {
-    padding-top: 50px;
-}
-</style>
-
-<style lang="scss">
-// fix css style bug in open el-dialog
-.el-popup-parent--hidden {
-    .fixed-header {
-        padding-right: 15px;
-    }
+    padding: 20px;
+    padding-top: 70px;
 }
 </style>

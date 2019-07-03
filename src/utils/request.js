@@ -3,9 +3,9 @@ import { Notification } from 'element-ui';
 import qs from 'qs';
 
 const request = axios.create({
-    timeout: 30000,
+    timeout: 10000,
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    withCredentials: true
+    withCredentials: false
 });
 
 request.interceptors.request.use(
@@ -20,6 +20,7 @@ request.interceptors.request.use(
             if (typeof data !== 'object') {
                 break;
             }
+
             if (contentType.includes('application/x-www-form-urlencoded')) {
                 config.data = qs.stringify(data);
                 break;
@@ -41,14 +42,12 @@ request.interceptors.request.use(
 request.interceptors.response.use(
     response => {
         try {
-            const { status, data, code } = response;
-            if (data.aaData) {
-                return Promise.resolve(data.aaData);
-            }
+            const { status, data } = response;
+
             if (status !== 200) {
                 throw 'status error';
             }
-            if (data.success || data.code === 200) {
+            if (data.s === 1) {
                 return Promise.resolve(data);
             } else {
                 throw data;
@@ -56,7 +55,7 @@ request.interceptors.response.use(
         } catch (error) {
             Notification.error({
                 title: '错误',
-                message: error.msg || error.message || error
+                message: error.m || error.message || error
             });
             return Promise.reject(error);
         }
@@ -64,7 +63,7 @@ request.interceptors.response.use(
     error => {
         Notification.error({
             title: '错误',
-            message: error.msg || error
+            message: error.m || error
         });
         return Promise.reject(error);
     }

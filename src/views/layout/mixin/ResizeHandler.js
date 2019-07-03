@@ -1,8 +1,8 @@
 import store from '@/store';
 
 const { body } = document;
-const WIDTH = 992; // refer to Bootstrap's responsive design
-
+//const WIDTH = 992;
+const WIDTH = 1;
 export default {
     watch: {
         $route(route) {
@@ -38,7 +38,6 @@ export default {
                     'app/toggleDevice',
                     isMobile ? 'mobile' : 'desktop'
                 );
-
                 if (isMobile) {
                     store.dispatch('app/closeSideBar', {
                         withoutAnimation: true

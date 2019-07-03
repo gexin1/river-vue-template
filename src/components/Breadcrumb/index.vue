@@ -48,7 +48,7 @@ export default {
 
             if (!this.isDashboard(first)) {
                 matched = [
-                    { path: '/dashboard', meta: { title: 'Dashboard' } }
+                    { path: '/dashboard', meta: { title: '首页' } }
                 ].concat(matched);
             }
 
