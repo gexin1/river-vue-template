@@ -47,8 +47,8 @@ export default {
                                             type: 'primary',
                                             size: 'small'
                                         },
-                                        on:{
-                                            click(){
+                                        on: {
+                                            click() {
                                                 console.log(params);
                                             }
                                         }
