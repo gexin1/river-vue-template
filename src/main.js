@@ -17,6 +17,53 @@ import './styles/global.scss';
 
 Vue.config.productionTip = false;
 
+Vue.component('CloumPlug', {
+    props: {
+        scope: {
+            type: Object,
+            default: () => ({})
+        },
+        attr: {
+            type: Object,
+            default: () => ({})
+        },
+        cloumData: {
+            type: Object,
+            default: () => ({})
+        },
+        render: {
+            type: Function,
+            default: h => {
+                return [h('p', 'render函数')];
+            }
+        }
+    },
+    render: function(h) {
+        return h(
+            'el-table-column',
+            [
+                h('div', {
+                    scopedSlots: {
+                        default: props =>
+                            h(
+                                'el-button',
+                                {
+                                    on: {
+                                        click: (e, scopedSlots) => {
+                                            console.log(scopedSlots);
+                                        }
+                                    }
+                                },
+                                'hello'
+                            )
+                    }
+                })
+            ],
+            'hello world'
+        );
+    }
+});
+
 Vue.prototype.$VM = new Vue({
     router,
     store,
